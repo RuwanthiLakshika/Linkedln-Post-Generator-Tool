@@ -1,4 +1,4 @@
-from llm_helper import llm
+from llm_helper import invoke_with_usage
 from few_shot import FewShotPosts
 
 few_shot = FewShotPosts()
@@ -13,10 +13,9 @@ def get_length_str(length):
         return "11 to 15 lines"
 
 
-def generate_post(length, language, tag):
+def generate_post(length, language, tag, model_name):
     prompt = get_prompt(length, language, tag)
-    response = llm.invoke(prompt)
-    return response.content
+    return invoke_with_usage(prompt, model_name)
 
 
 def get_prompt(length, language, tag):
@@ -49,4 +48,4 @@ def get_prompt(length, language, tag):
 
 
 if __name__ == "__main__":
-    print(generate_post("Medium", "English", "Mental Health"))
+    print(generate_post("Medium", "English", "Mental Health", "openai/gpt-oss-120b"))
